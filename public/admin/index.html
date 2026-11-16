@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#173d2b">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="description" content="Private Purayidakrishi administration dashboard.">
+  <title>Admin Dashboard | Purayidakrishi</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/admin/css/admin.css">
+  <script src="/admin/js/admin.js" defer></script>
+</head>
+<body>
+  <main id="login-view" class="login-layout" hidden>
+    <section class="login-visual" aria-label="Purayidakrishi">
+      <a class="login-brand" href="/" aria-label="Purayidakrishi homepage">
+        <span class="brand-symbol" aria-hidden="true">P</span>
+        <span><strong>Purayidakrishi</strong><small>Homestead Agroecology</small></span>
+      </a>
+      <div class="login-message">
+        <span class="eyebrow">ADMINISTRATION</span>
+        <h1>Good work grows<br>with good care.</h1>
+        <p>Manage course registrations and community enquiries in one place.</p>
+      </div>
+      <div class="login-visual-foot">Rooted in nature. Connected by knowledge.</div>
+    </section>
+    <section class="login-panel">
+      <div class="login-card">
+        <span class="eyebrow">SECURE ACCESS</span>
+        <h2>Welcome back</h2>
+        <p class="muted">Sign in to your Purayidakrishi admin account.</p>
+        <form id="login-form" class="stack-form">
+          <label for="username">Username</label>
+          <input id="username" name="username" autocomplete="username" required maxlength="50" placeholder="Enter your username">
+          <label for="password">Password</label>
+          <input id="password" name="password" type="password" autocomplete="current-password" required maxlength="200" placeholder="Enter your password">
+          <button class="button button-primary button-full" type="submit" id="login-submit">Sign in <span aria-hidden="true">→</span></button>
+          <p class="form-message" id="login-message" role="status" aria-live="polite"></p>
+        </form>
+        <a class="back-link" href="/">← Back to website</a>
+      </div>
+      <p class="login-legal">Authorised team members only. Your session expires after 8 hours.</p>
+    </section>
+  </main>
+
+  <div id="dashboard-view" class="admin-shell" hidden>
+    <aside class="sidebar" id="sidebar">
+      <a class="sidebar-brand" href="/" aria-label="Purayidakrishi home">
+        <span class="brand-symbol" aria-hidden="true">P</span>
+        <span><strong>Purayidakrishi</strong><small>ADMIN WORKSPACE</small></span>
+      </a>
+      <div class="side-label">WORKSPACE</div>
+      <nav class="side-nav" aria-label="Admin navigation">
+        <button class="nav-item active" type="button" data-view="overview"><span class="nav-icon">▦</span> Overview</button>
+        <button class="nav-item" type="button" data-view="registrations"><span class="nav-icon">♧</span> Course registrations <span class="nav-count" id="registration-nav-count">0</span></button>
+        <button class="nav-item" type="button" data-view="contacts"><span class="nav-icon">✉</span> Contact enquiries <span class="nav-count" id="contact-nav-count">0</span></button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="sidebar-help"><span class="help-dot"></span><div><strong>Workspace secured</strong><small>Private admin session</small></div></div>
+        <a class="side-public-link" href="/" target="_blank" rel="noopener">↗ View public website</a>
+        <button class="logout-button" id="logout-button" type="button"><span>⇥</span> Sign out</button>
+      </div>
+    </aside>
+
+    <section class="main-area">
+      <header class="topbar">
+        <button class="mobile-menu-button" id="mobile-menu-button" type="button" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+        <div class="breadcrumb"><span>Purayidakrishi</span><b>/</b><strong id="breadcrumb-current">Overview</strong></div>
+        <div class="topbar-right"><span class="live-indicator">● <span>Admin workspace</span></span><div class="avatar" id="admin-avatar">A</div><span class="admin-name" id="admin-name">Admin</span></div>
+      </header>
+
+      <div class="content-wrap">
+        <div class="page-heading">
+          <div><span class="eyebrow" id="page-eyebrow">YOUR WORKSPACE</span><h1 id="page-title">Overview</h1><p id="page-description">A clear view of registrations and community enquiries.</p></div>
+          <div class="heading-actions"><a class="button button-quiet" href="/" target="_blank" rel="noopener">View website ↗</a><a class="button button-outline" href="/api/admin/exports/registrations.csv" id="export-button" hidden>↓ Export registrations</a></div>
+        </div>
+
+        <div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
+
+        <section class="view-panel" id="overview-panel" data-panel="overview">
+          <div class="stats-grid">
+            <article class="stat-card"><div class="stat-top"><span>Total registrations</span><span class="stat-icon leaf">♧</span></div><strong id="stat-registrations">—</strong><small>All course enquiries</small></article>
+            <article class="stat-card"><div class="stat-top"><span>New this week</span><span class="stat-icon sun">↗</span></div><strong id="stat-week">—</strong><small>Registrations in the last 7 days</small></article>
+            <article class="stat-card"><div class="stat-top"><span>Contact enquiries</span><span class="stat-icon blue">✉</span></div><strong id="stat-contacts">—</strong><small>Messages received</small></article>
+            <article class="stat-card"><div class="stat-top"><span>Payment proofs</span><span class="stat-icon purple">▧</span></div><strong id="stat-proofs">—</strong><small>Private uploads received</small></article>
+          </div>
+          <div class="overview-grid">
+            <section class="surface status-card"><div class="surface-heading"><div><h2>Registration status</h2><p>Current course enquiry pipeline</p></div><span class="heading-mark">◌</span></div><div id="status-breakdown" class="status-breakdown"><p class="empty-copy">Loading registration status…</p></div></section>
+            <section class="surface quick-card"><div class="surface-heading"><div><h2>Quick actions</h2><p>Common admin tasks</p></div></div><button class="quick-action" type="button" data-view="registrations"><span class="quick-icon">♧</span><span><strong>Review registrations</strong><small>Check participant details and payment proof</small></span><b>→</b></button><button class="quick-action" type="button" data-view="contacts"><span class="quick-icon mail">✉</span><span><strong>Read contact enquiries</strong><small>Respond to messages from the website</small></span><b>→</b></button><a class="quick-action" href="/api/admin/exports/registrations.csv"><span class="quick-icon export">↓</span><span><strong>Download registration CSV</strong><small>Export the full registration list</small></span><b>→</b></a></section>
+          </div>
+          <section class="surface guidance-card"><div class="guidance-icon">✦</div><div><strong>Keep participant information private</strong><p>Only authorised team members should access contact details and payment proof files. Sign out when you finish using a shared device.</p></div></section>
+        </section>
+
+        <section class="view-panel" id="registrations-panel" data-panel="registrations" hidden>
+          <div class="surface table-surface">
+            <div class="table-toolbar"><div><h2>Course registrations</h2><p>Review participant enquiries and update their progress.</p></div><a class="button button-outline" href="/api/admin/exports/registrations.csv">↓ Export CSV</a></div>
+            <form class="filters" id="registration-filters"><label class="search-field"><span aria-hidden="true">⌕</span><input type="search" id="registration-search" placeholder="Search name, phone, email or location" aria-label="Search registrations"></label><select id="registration-status-filter" aria-label="Filter registrations by status"><option value="">All statuses</option><option value="enquiry_received">Enquiry received</option><option value="contacted">Contacted</option><option value="payment_pending">Payment pending</option><option value="confirmed">Confirmed</option><option value="enrolled">Enrolled</option><option value="rejected">Rejected</option></select><button class="button button-quiet" type="submit">Apply filters</button></form>
+            <div class="table-wrap"><table><thead><tr><th>PARTICIPANT</th><th>CONTACT</th><th>COURSE</th><th>RECEIVED</th><th>PAYMENT PROOF</th><th>STATUS</th><th></th></tr></thead><tbody id="registrations-table"><tr><td colspan="7" class="table-empty">Loading registrations…</td></tr></tbody></table></div>
+            <div class="table-foot"><span id="registration-result-count">—</span><span>Showing the latest 100 matching records</span></div>
+          </div>
+        </section>
+
+        <section class="view-panel" id="contacts-panel" data-panel="contacts" hidden>
+          <div class="surface table-surface">
+            <div class="table-toolbar"><div><h2>Contact enquiries</h2><p>Messages submitted through the public website.</p></div></div>
+            <form class="filters" id="contact-filters"><label class="search-field"><span aria-hidden="true">⌕</span><input type="search" id="contact-search" placeholder="Search name, email or message" aria-label="Search contact enquiries"></label><select id="contact-status-filter" aria-label="Filter contacts by status"><option value="">All statuses</option><option value="new">New</option><option value="in_progress">In progress</option><option value="resolved">Resolved</option><option value="spam">Spam</option></select><button class="button button-quiet" type="submit">Apply filters</button></form>
+            <div class="table-wrap"><table><thead><tr><th>FROM</th><th>SUBJECT</th><th>MESSAGE PREVIEW</th><th>RECEIVED</th><th>STATUS</th><th></th></tr></thead><tbody id="contacts-table"><tr><td colspan="6" class="table-empty">Loading contact enquiries…</td></tr></tbody></table></div>
+            <div class="table-foot"><span id="contact-result-count">—</span><span>Latest 100 messages</span></div>
+          </div>
+        </section>
+      </div>
+    </section>
+  </div>
+
+  <dialog class="detail-dialog" id="detail-dialog" aria-labelledby="detail-title">
+    <div class="dialog-head"><div><span class="eyebrow" id="detail-eyebrow">RECORD DETAILS</span><h2 id="detail-title">Details</h2></div><button class="dialog-close" type="button" id="dialog-close" aria-label="Close details">×</button></div>
+    <div class="dialog-content" id="detail-content"></div>
+  </dialog>
+</body>
+</html>

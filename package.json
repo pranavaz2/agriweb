@@ -1,0 +1,21 @@
+{
+  "name": "purayidakrishi-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Bilingual Purayidakrishi homestead agroecology website",
+  "type": "module",
+  "engines": {
+    "node": ">=20.6"
+  },
+  "scripts": {
+    "dev": "node --watch server.mjs",
+    "start": "node server.mjs",
+    "start:local": "node server.mjs",
+    "check": "node --check server.mjs && node --check public/js/site.js && node --check public/admin/js/admin.js && node --check lib/admin-auth.mjs && node --check scripts/create-admin.mjs",
+    "test": "node --test",
+    "admin:create": "node scripts/create-admin.mjs"
+  },
+  "dependencies": {
+    "pg": "^8.16.3"
+  }
+}

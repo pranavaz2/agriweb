@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Sitemap: https://www.purayidakrishi.com/sitemap.xml
+Disallow: /admin
